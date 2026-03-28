@@ -6,6 +6,8 @@ services:
       MYSQL_DATABASE: soso
     ports:
       - "3306:3306"
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
 
   backend:
     build: ./docker/php
