@@ -21,13 +21,14 @@ class UsersController extends AppController
         $users = $this->paginate($query);
 
         $this->set(compact('users'));
+        $this->viewBuilder()->setOption('serialize', ['users']);
     }
 
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
         // ログインと追加（ユーザー登録）画面は未ログインでもアクセス可能にする
-        $this->Authentication->addUnauthenticatedActions(['login', 'add']);
+        $this->Authentication->addUnauthenticatedActions(['login', 'add', 'index']);
     }
 
     public function login()

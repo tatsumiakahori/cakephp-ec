@@ -45,6 +45,9 @@ class AppController extends Controller
 
         $this->loadComponent('Authentication.Authentication');
 
+        // レンダリングクラスをJsonに固定し、常にJSONを返すようにする
+        $this->viewBuilder()->setClassName('Json');
+
         /*
          * Enable the following component for recommended CakePHP form protection settings.
          * see https://book.cakephp.org/5/en/controllers/components/form-protection.html

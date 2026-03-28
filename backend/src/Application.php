@@ -34,6 +34,7 @@ use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
+use Laminas\Diactoros\Response\JsonResponse;
 
 /**
  * Application setup class.
@@ -98,7 +99,14 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             ->add(new CsrfProtectionMiddleware([
                 'httponly' => true,
             ]))
-            ->add(new AuthenticationMiddleware($this));
+            ->add(new AuthenticationMiddleware($this))
+            ->add(function ($request, $handler) {
+                $response = $handler->handle($request);
+                return $response
+                    ->withHeader('Access-Control-Allow-Origin', 'http://localhost:3001')
+                    ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+                    ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization');
+            });
 
         return $middlewareQueue;
     }
