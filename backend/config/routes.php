@@ -32,6 +32,9 @@ return function (RouteBuilder $routes): void {
         $builder->setExtensions(['json']);
 
         $builder->connect('/users', ['controller' => 'Users', 'action' => 'index', '_ext' => 'json']);
+        $builder->connect('/products', ['controller' => 'Products', 'action' => 'index', '_ext' => 'json']);
+        $builder->connect('/products/{id}', ['controller' => 'Products', 'action' => 'view', '_ext' => 'json'], ['id' => '\d+', 'pass' => ['id']]);
+
 
         $builder->fallbacks();
     });
